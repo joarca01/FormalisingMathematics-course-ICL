@@ -1,0 +1,460 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{top=2cm, bottom=2cm, left=2.3cm, right=1.9cm}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{multirow}
+\usepackage{gensymb}
+\usepackage{diagbox}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xfrac}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{physics}
+\usepackage[nameinlink]{cleveref}
+\usepackage{titlesec}
+\usepackage{authblk}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\onehalfspacing
+\linespread{1.0}
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{green}{rgb}{0.0, 1.0, 0.0}
+\definecolor{leanblue}{RGB}{0,0,160}
+\definecolor{leangreen}{RGB}{0,120,0}
+\definecolor{leanred}{RGB}{160,0,0}
+\definecolor{leancomment}{RGB}{120,120,120}
+\hypersetup{colorlinks, citecolor=green, linkcolor=blue, urlcolor=blue}
+\setlength{\parindent}{16pt}
+
+\lstdefinelanguage{Lean}{
+	keywords={
+		theorem, lemma, def, structure, inductive, class,
+		namespace, section, variable, variables,
+		open, import, universe, universes,
+		begin, end, match, with, if, then, else,
+		by, fun, assume, have, show, from,
+		forall, exists, let, in
+	},
+	sensitive=true,
+	comment=[l]{--},
+	morecomment=[s]{/-}{-/},
+	string=[b]",
+}
+
+\lstset{
+	language=Lean,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{leanblue}\bfseries,
+	commentstyle=\color{leancomment}\itshape,
+	stringstyle=\color{leanred},
+	numbers=left,
+	numberstyle=\tiny,
+	mathescape=true,
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	tabsize=2,
+	showstringspaces=false,
+	captionpos=b
+}
+
+\newcommand{\mapsup}{\mathrel{\mkern2mu\raisebox{-.5ex}{\rotatebox{90}{$\mapsto$}}}}
+\lstset{
+	literate=
+	{ℤ}{{$\mathbb{Z}$}}1
+	{α}{{$\alpha$}}1
+	{β}{{$\beta$}}1
+	{ℚ}{{$\mathbb{Q}$}}1
+	{ℕ}{{$\mathbb{N}$}}1
+	{⦃}{{$\{|$}}1
+	{⦄}{{$|\}$}}1
+	{≃ₐ}{{$\simeq_a$}}1
+	{∀}{{$\forall$}}1
+	{∃}{{$\exists$}}1
+	{→}{{$\to$}}1
+	{↥}{{$\mapsup$}}1
+	{∧}{{$\land$}}1
+	{∈}{{$\in$}}1
+	{∏}{{$\prod$}}1
+	{≤}{{$\leqslant$}}1
+	{≥}{{$\geqslant$}}1
+	{⟨}{{$\langle$}}1
+	{⟩}{{$\rangle$}}1
+	{⁻¹}{{$^{-1}$}}1
+	{⟨}{{$\langle$}}1
+	{⟩}{{$\rangle$}}1
+	{↔}{{$\Leftrightarrow$}}1
+	{∧}{{$\wedge$}}1
+	{ℝ}{{$\R$}}1
+	{⇒}{{$\Rightarrow$}}1
+	{δ}{{$\delta$}}1
+	{K₂}{{$K_2$}}1
+	{K₁}{{$K_1$}}1
+	{x₀}{{$x_0$}}1
+	{ε}{{$\varepsilon$}}1
+	{≠}{{$\neq$}}1
+	{·}{{\textperiodcentered}}1
+}
+
+\crefname{lstlisting}{Listing}{Listings}
+\Crefname{lstlisting}{Listing}{Listings}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+		\left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+		#1 % the function
+		\littletaller % pretend it's a little taller at normal size
+		\right|_{#2} % this is the delimiter
+}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}} % set of natural numbers
+\newcommand{\R}{\ensuremath{\mathbb{R}}} % set of real numbers
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}} % set of rational numbers
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}} % set of integer numbers
+\newcommand{\C}{\ensuremath{\mathbb{C}}} % set of complex numbers
+\DeclareMathOperator{\Irr}{Irr} % Irreducible polynomial
+\DeclareMathOperator{\Gal}{Gal} % Galois group
+\DeclareMathOperator{\Char}{char} % Characteristic
+\DeclareMathOperator{\Cl}{Cl} % Conjugacy class
+\DeclareMathOperator{\im}{Im} % Conjugacy class
+\DeclareMathOperator{\Frob}{Frob} % Frobenius automorphism
+\newcommand{\littletaller}{\mathchoice{\vphantom{\big|}}{}{}{}}
+
+% --------------------
+% Title formatting
+% --------------------
+\titleformat{\section}
+{\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+
+\begin{document}
+	\sffamily
+	%\title{\textbf{Formalising Mathematics} \\ \textbf{Project 1} \\ \textbf{Finite Jensen inequality for convex functions on $\R$}}
+	%\author{Joan Arenillas i Cases, \ 06067859}
+	%\maketitle
+	
+	% --------------------
+	% Title
+	% --------------------
+	\begin{center}
+		{\LARGE\bfseries
+			Formalising Mathematics Project 2: \\[0.3em]
+			A Galois extension over $\Q$\\[0.3em]
+			\par}
+	\end{center}
+	
+	\vspace{0.4cm}
+	
+	% --------------------
+	% Author
+	% --------------------
+	\begin{center}
+		\textbf{Joan Arenillas i Cases}\textsuperscript{1}
+	\end{center}
+	
+	\vspace{0.5cm}
+	
+	\noindent
+	\textsuperscript{1}MSc in Applied Mathematics, Imperial College London.\\
+	CID: 06067859, \ \href{mailto:ja1225@ic.ac.uk}{ja1225@ic.ac.uk}
+	
+	\vspace{0.6cm}
+	
+	% --------------------
+	% Keywords
+	% --------------------
+	\vspace{0.5cm}
+	
+	% --------------------
+	% Abstract
+	% --------------------
+	\noindent
+	\textbf{Abstract.}
+	In this report we work on a finite, explicit field extension over the field $\Q$. We begin by defining some algebraic elements $\alpha$ and $\beta$ in terms of a prime number $p$, and considering the minimal polynomial of $\alpha$ and $\beta$. We then prove that $\Q(\alpha)\cong\Q(\beta)$ and that, in fact, they correspond to the same subfield of $\C$ if $\sqrt{p-1}$ lies in $\Q$. Moreover, we generally prove that $\Q(\alpha,\beta)/\Q$ is a Galois extension and we determine that its Galois group is $\Z/4\Z$. Finally, we use the fundamental theorem of Galois theory to deduce that the only non-trivial subfield lying between $\Q(\alpha,\beta)$ and $\Q$ is $\Q(\sqrt{p})$. In the second part of the report we formalise some of our results, as well as other auxiliary---but necessary---definitions. At the end, we discuss the challenges faced and possible future directions.
+	
+	\vspace{0.5cm}
+	
+	\section{Introduction}
+	
+	The goal of this report is to formalise in Lean some standard results regarding an explicit Galois extension over $\Q$. We aim to prove the following:
+	\begin{theorem}
+		Let $p$ be a prime such that $\sqrt{p-1}$ lies in $\Q$ and define $\alpha:=\sqrt{p+\sqrt{p}}$ and $\beta:=\sqrt{p-\sqrt{p}}$. Then $\Q(\alpha,\beta)/\Q$ is a Galois extension of degree $4$, and $\Gal(\Q(\alpha,\beta)/\Q)$ is isomorphic to $\Z/4\Z$. Also, the only non-trivial subfield lying between $\Q(\alpha,\beta)$ and $\Q$ is $\Q(\sqrt{p})$.
+	\end{theorem}
+	
+	We will see in \Cref{sec:informal} that this result can be proved with a small number of lemmas and elementary Galois theory concepts. We will just need some results on the degree of the extension $\Q(\alpha,\beta)/\Q$ and basic exploration of the order of the morphisms in $\Gal(\Q(\alpha,\beta)/\Q)$. However, we will discover in \Cref{sec:formal} that the Lean implementation is far more intricate. Specifically, it will require handling the roots of the minimal polynomial of $\alpha$ very carefully and precisely stating where these belong. We will ponder over the challenges we faced in \Cref{sec:challenges}, and we will propose some ways to move forward in \Cref{sec:conclu}.
+	
+	There are countless sources explaining the basic results of finite Galois theory over $\Q$. Unless otherwise stated, in this report I have followed an example in \cite{xarles}.
+
+	\section{Informal Proof}\label{sec:informal}
+	
+	Let $p$ be a prime number. Consider $\alpha:=\sqrt{p+\sqrt{p}}$ and $\beta:=\sqrt{p-\sqrt{p}}$, which is well-defined since $p>\sqrt{p}$ for $p>1$. We will start by showing the following result.
+	
+	\begin{lemma}\label{lemma:IrrPol}
+		The minimal polynomial of $\alpha$ over $\Q$ is $m_{\alpha,\Q}(x)=x^4-2px^2+p(p-1)$.
+	\end{lemma}
+	\begin{proof}
+		Since $\alpha^2=p+\sqrt{p}$, then $(\alpha^2-p)^2=p$, and so $\alpha^4-2p\alpha^2+p^2-p=0$. Thus, $\alpha$ is a root of $p(x):=x^4-2px^2+p(p-1)$. Observe that $p(x)$ is a monic polynomial, and it is also irreducible due to Eisenstein citerion using the prime $p$ (one can check that $p\mid -2p, p(p-1)$, $p\nmid 1$, and $p^2\nmid p(p-1)$). Observe that we can use Eisenstein criterion since $p(x)$ lies in $\Q[x]$, where $\Q$ is the field of fractions of $\Z$ (a UFD), and we are using the criterion for a prime element of $\Z$. Thus, $m_{\alpha,\Q}(x)=p(x)$.
+	\end{proof}
+	
+	In particular, this lemma tells us that $\alpha$ is algebraic over $\Q$. In the following, we will drop the subindex $\Q$ in the minimal polynomial for shortness. We will now prove that $\Q(\alpha)\cong\Q(\beta)$.
+	
+	\begin{lemma}
+		\label{lemma:isomfields}
+		The field $\Q(\alpha)$ is isomorphic to the field $\Q(\beta)$.
+	\end{lemma}
+	\begin{proof}
+		By the same computation as in \Cref{lemma:IrrPol}, we get that $m_{\beta}(x)=x^4-2px^2+p(p-1)$, so $m_{\alpha}(x)=m_{\beta}(x)$ (so $\beta$ is also algebraic over $\Q$). Now, Kronecker's construction enables us to write
+		\begin{equation*}
+			\Q(\alpha)\cong \Q[x]/(m_{\alpha}(x))= \Q[x]/(m_{\beta}(x))\cong\Q(\beta).
+		\end{equation*}
+	\end{proof}
+	
+	In fact, these two fields are the \emph{same} field (as subfields of $\C$) if we enforce some condition on $p$.
+	
+	\begin{lemma}\label{lemma:equalext}
+		If $\sqrt{p-1}$ lies in $\Q$, then $\Q(\alpha)=\Q(\beta)$ as subfields of $\C$.
+	\end{lemma}
+	\begin{proof}
+		First, observe that $\alpha\beta=\sqrt{p^2-p}=\sqrt{p(p-1)}$. Also, in \Cref{lemma:IrrPol} we have seen that $\alpha^2-p=\sqrt{p}$ and, in a similar way, $\beta^2-p=-\sqrt{p}$. We can combine the first two expressions to show that
+		\begin{equation}
+			\label{eq:beta_ito_alpha}
+			\beta=\frac{(\alpha^2-p)\sqrt{p-1}}{\alpha}=\left(\alpha-\frac{p}{\alpha}\right)\sqrt{p-1},
+		\end{equation}
+		since $\alpha>0$ by definition. Now using the first and third expressions we derived at the beginning we get
+		\begin{equation}
+			\label{eq:alpha_ito_beta}
+			\alpha=-\frac{(\beta^2-p)\sqrt{p-1}}{\beta}=\left(\frac{p}{\beta}-\beta\right)\sqrt{p-1},
+		\end{equation}
+		where again we used that $\beta>0$. Since $\sqrt{p-1}$ lies in $\Q$, we have that $\beta$ can be expressed in terms of $\alpha$, its inverse and product with rational numbers (similarly for $\alpha$ in terms of $\beta$). This shows that $\Q(\beta)\subseteq\Q(\alpha)$ and $\Q(\alpha)\subseteq\Q(\beta)$, respectively. Thus, $\Q(\alpha)=\Q(\beta)$.
+	\end{proof}
+	
+	We can therefore write $\Q(\alpha)$, $\Q(\beta)$, and $\Q(\alpha,\beta)$ indistinctively. We will now see that the field extension $\Q(\alpha,\beta)/\Q$ has a nice structure.
+	\begin{lemma}\label{lemma:isGalois}
+		The field $\Q(\alpha,\beta)/\Q$ is a Galois extension.
+	\end{lemma}
+	\begin{proof}
+		Start by observing that $-\alpha<-\beta<\beta<\alpha$ by definition. Thus, $\pm\alpha$ and $\pm\beta$ are four distinct roots of $x^4-2px^2+p(p-1)$ (since this is the minimal polynomial of $\alpha$ and $\beta$ and it only involves even powers of $x$). Then, we may write
+		\begin{equation}
+			\label{eq:poli_split}
+			x^4-2px^2+p(p-1)=(x-\alpha)(x+\alpha)(x-\beta)(x+\beta),
+		\end{equation}
+		so $\Q(\alpha,\beta)$ is a splitting field of the polynomial $x^4-2px^2+p(p-1)$. Thus, $\Q(\alpha,\beta)/\Q$ is an algebraic, normal extension, and it is also separable since $\Char(\Q)=0$. In all, $\Q(\alpha,\beta)/\Q$ is a Galois extension.
+	\end{proof}
+	
+	Now let $p$ be a prime of the form $p=n^2+1$, for some positive $n\in\N$ (so that we are in the conditions of \Cref{lemma:equalext}). We now want to determine the structure of $\Gal(\Q(\alpha,\beta)/\Q)$.
+	
+	\begin{lemma}\label{lemma:Galstruct}
+		Let $p$ be a prime of the form $p=n^2+1$, for some $n\in\N$. Then, the degree of the extension $\Q(\alpha,\beta)/\Q$ is 4 and $\Gal(\Q(\alpha,\beta)/\Q)\cong \Z/4\Z$.
+	\end{lemma}
+	\begin{proof}
+		We have that $n=\sqrt{p-1}\in\Q$ so, by \Cref{lemma:equalext}, we have that $\Q(\alpha,\beta)=\Q(\alpha)$. Using that $\alpha$ is algebraic over $\Q$, we have that $[\Q(\alpha,\beta):\Q]=[\Q(\alpha):\Q]=\deg(m_\alpha(x))=4$. Since we know that $\Q(\alpha)$ is a Galois extension from \Cref{lemma:isGalois}, we have that $\abs{\Gal(\Q(\alpha)/\Q)}=[\Q(\alpha):\Q]=4$. Thus, there are $4$ group morphisms in $\Gal(\Q(\alpha)/\Q)$, which are determined by the image of $\alpha$ (which can be $\pm\alpha$ or $\pm\beta$). Let $\sigma\in\Gal(\Q(\alpha)/\Q)$ be such that
+		\begin{align*}
+			\sigma(\alpha)&=\beta,\\
+			\sigma^2(\alpha)&=\sigma(\beta)=\sigma\left(\left(\alpha-\frac{p}{\alpha}\right)n\right)=\sigma(n\alpha)-\frac{p}{\sigma(\alpha)}n=n\left(\beta-\frac{p}{\beta}\right)=-\alpha\neq \alpha,\\
+			\sigma^3(\alpha)&=\sigma(-\alpha)=-\beta,\\
+			\sigma^4(\alpha)&=\sigma(-\beta)=-(-\alpha)=\alpha,
+		\end{align*}
+		where in the second line we have used the computations developed in \Cref{lemma:equalext}. Thus, $\sigma$ is an element of $\Gal(\Q(\alpha)/\Q)$ of order $4$, so $\Gal(\Q(\alpha)/\Q)=\langle\sigma\rangle$ is a cyclic group of order $4$. By the classification of finite groups, the only option is that $\Gal(\Q(\alpha)/\Q)\cong\Z/4\Z$.
+	\end{proof}
+	
+	With the same hypotheses as before, we can work out the fields lying between $\Q(\alpha,\beta)$ and $\Q$. We finally have the following result\footnote{In the formal Lean proof we will omit this last lemma, since the code already reached $650$ lines.}:
+	\begin{lemma}
+		\label{lemma:subfields}
+		With the same hypotheses as in \Cref{lemma:Galstruct}, the subfields lying between $\Q(\alpha,\beta)$ and $\Q$ are exactly $\Q$, $\Q(\alpha,\beta)$ and $\Q(\sqrt{p})$.
+	\end{lemma}
+	\begin{proof}
+		In \Cref{lemma:Galstruct} we have shown that $\Gal(\Q(\alpha,\beta)/\Q)\cong\Z/4\Z$. This group has $3$ subgroups: itself, the trivial subgroup, and a subgroup of order $2$. By the fundamental theorem of Galois theory, there are exactly $3$ subfields $L$ such that $\Q(\alpha,\beta)\supseteq L\supseteq \Q$. They are precisely $\Q(\alpha,\beta)$, $\Q$, and a field of degree $2$ over $\Q$. But since $\sqrt{p}=\alpha^2-p$ lies in $\Q(\alpha,\beta)$ and not in $\Q$, the subfield of degree $2$ we are looking for must be $\Q(\sqrt{p})$ (observe that $\left[\Q(\sqrt{p}):\Q\right]=\deg\left(m_{\sqrt{p}}(x)\right)=\deg(x^2-p)=2$).
+	\end{proof} 
+	
+	\section{Formal Proof}\label{sec:formal}
+	 
+	 We now turn our attention to formalising \Cref{sec:informal} in Lean\footnote{I acknowledge that I have used Microsoft Copilot to check the spelling of this report. Also, the \lstinline|exact?| and \lstinline|apply?| tactics have been used to propose next steps in proofs. I have commented the code where I used these strategies.}. In the code, we follow the structure of the previous section. That is, we divide it in sections, providing the necessary results and definitions to prove the lemmas in \Cref{sec:informal}.
+	 
+	 Even after after writing a code of over $650$ lines, the full implementation (without \emph{sorries}) of the results has not been possible. This is because even the simplest results have to be treated very carefully in Galois theory, and this makes the code very long. To be able to hand in this report on time and keep the corresponding code within reasonable limits, I have therefore \emph{sorried} some proofs. I have done this for proofs that closely follow the structure of previously implemented proofs, or that are easily provable. In all cases, I have explained (either in the report or in the code) why I \emph{sorried} the proof, and I provide an explanation of why I think the goal is provable.
+	 
+	 We will start by summarising the most important preliminary results to prove the first lemma in \Cref{sec:informal}.
+	 
+	 \subsection{Irreducible and minimal polynomials in Lean}
+	 
+	Our goal is to prove \Cref{lemma:IrrPol} in Lean. We start by defining the prime $p$, and constructing $\alpha$, $\beta$, and $m_\alpha(x)$ using a \lstinline|noncomputable def| statement. This polynomial has its coefficients in $\Q$, so we have to tell Lean this specifically:\\
+	
+	\begin{lstlisting}[caption={Definition of $m_\alpha(x)$.}]
+		noncomputable def m_alpha (p : ℕ) : Polynomial ℚ := X^4 - C (2 * p : ℚ) * X^2 + C (p*(p-1) : ℚ)
+	\end{lstlisting}
+	
+	In the informal proof, it is trivial to observe that $m_\alpha(x)$ is monic and has degree $4$, and it is also direct to observe that $\alpha$ is a root of $m_\alpha(x)$. In Lean, however, these facts have to be carefully proved in separate lemmas. We have to even prove in detail that $\sqrt{p}\geq p$. Moreover, to use Eisenstein criterion to deduce that $m_\alpha(x)$ is irreducible, I discovered that one needs to work with $m_\alpha(x)$ as an element of $\Z[x]$ rather than thinking it in $\Q[x]$. It is therefore necessary to prove that the integer version of $m_\alpha(x)$ is monic, has degree $4$, and has $\alpha$ as a root.
+	
+	Once we have established these basic facts about $\alpha$ and $m_\alpha(x)$, we use Eisenstein criterion (\lstinline|Polynomial.irreducible_of_eisenstein_criterion| in Lean) to show that $m_\alpha(x)\in\Z[x]$ is irreducible and conclude that $m_\alpha(x)\in\Q[x]$ is in fact the minimal polynomial of $\alpha$. To use this criterion, we need to first define the prime ideal generated by $p$ as follows:\\
+	
+	\begin{lstlisting}[caption={Definition of the prime ideal $\mathcal{P}:=(p)$.}]
+		let P : Ideal ℤ := Ideal.span ({(p : ℤ)} : Set ℤ)
+	\end{lstlisting}
+	
+	Once this is settled, we must prove a collection of facts (through \lstinline|have| statements) to use Eisenstein criterion. Specifically, one needs to prove that the ideal $(p)$ is prime; that $1$ does not belong to $(p)$; but all other coefficients of $m_\alpha(x)$ do; that $\deg(m_\alpha(x))>0$; that $m_\alpha(x)\in\Z[x]$ is primitive; and that the constant term of $m_\alpha(x)$ (which is $p(p-1)$) does not belong to $(p)^2$. This last point proved to be difficult, because it combines working with natural numbers and subtraction (observe the term $p(p-1)$ in $m_\alpha(x)$). 
+	
+	In particular, in the code I turn the goal into a contradiction argument using divisibility of integers. Specifically, I show that $p^2\mid p(p-1)$ leads to a contradiction since $p>1$ is a prime number. Observe a subtlety in this argument: $p$ is a natural number (it is a prime), but subtraction and divisibility properties are naturally performed in $\Z$, not in $\N$. Thus, I have specifically proved that $\uparrow p^2\mid \uparrow p(\uparrow p-1)$, where the up arrows represent coercions from $\N$ to $\Z$. At the end of the argument, we use \lstinline|norm_cast| to reduce the goals to the natural numbers again when it is safe to do so.
+	
+	After the irreducibility is settled, I deduce $m_\alpha(x)$ is irreducible in $\Q[x]$ using Gauss lemma, which states that a primitive integer polynomial is irreducible over $\Z$ if and only if it is irreducible over $\Q$. Finally, we prove that $m_\alpha(x)$ is the minimal polynomial of $\alpha$, which concludes the formalisation of \Cref{lemma:IrrPol}. The Lean implementation of this fact is very straightforward using the lemmas we have proved so far:\\
+	
+	\begin{lstlisting}[caption={Prove that $m_\alpha(x)$ is the minimal polynomial of $\alpha$.}, label={list:1}]
+		lemma min_pol_alph (hp : Nat.Prime p) : minpoly ℚ (α p) = m_alpha p := by
+		refine Eq.symm (minpoly.eq_of_irreducible_of_monic ?_ ?_ ?_)
+		-- We use the previous lemmas
+		· apply m_alpha_irreducible p hp
+		· apply eval_alpha_zero
+		· apply m_alpha_monic p
+	\end{lstlisting}
+	
+	Showing that $\beta$ is a root of $m_\alpha(x)$ directly shows that this is also the minimal polynomial of $\beta$ using a similar proof to that in \cref{list:1}.
+	
+	At this point I should highlight that the \lstinline|grind| tactic did not prove to be useful when dealing with polynomials, roots and prime numbers. However, I used the \lstinline|exact?| and \lstinline|apply?| tactics very frequently. I have tried my best to point out in the code where I used these tactics. However, I have omitted commenting on where I used the \lstinline|simp?| tactic to improve readability of the code\footnote{In any case, one can assume that every long \lstinline|simp only [...]| block has been produced with this tactic.}.
+	
+	\subsection{Working with field extensions}
+	
+	We can now turn our attention to prove \Cref{lemma:isomfields}. This involves defining field extensions over $\Q$. In particular, the extension $\Q(\alpha)/\Q$ can be constructed like:\\
+	
+	\begin{lstlisting}[caption={Defining the extension $\Q(\alpha)/\Q$.}, label={list:2}]
+		noncomputable def Q_a : IntermediateField ℚ ℝ :=
+		IntermediateField.adjoin ℚ ({α p} : Set ℝ) 
+	\end{lstlisting}
+	
+	An analogous construction works for $\Q(\beta)$. In ordert to prove \Cref{lemma:isomfields}, we need to be able to perform Kronecker's construction, that is, build the field $\Q(\alpha)$ as a quotient of $\Q[x]$ over an irreducible polynomial. This is nicely handled with \lstinline|IntermediateField.adjoinRootEquivAdjoin| definition provided that $\alpha$ is integral over $\Q$. The construction is performed as follows:\\
+	
+	\begin{lstlisting}[caption={Defining the field \ensuremath{\mathbb{Q}(\alpha)\cong\mathbb{Q}[x]/(m_\alpha(x))}.}, label={list:3}]
+		lemma hα_int : IsIntegral ℚ (α p) := ⟨m_alpha p, m_alpha_monic p, eval_alpha_zero p⟩
+		
+		noncomputable def isom_min_a_Qa (p : ℕ) : AdjoinRoot (minpoly ℚ (α p)) ≃ₐ[ℚ] ℚ(α p) := by
+		exact (IntermediateField.adjoinRootEquivAdjoin (F := ℚ) (E := ℝ) (α := α p) (hα_int p)) 
+	\end{lstlisting}
+	
+	Again, a similar procedure can be used to build $\Q(\beta)$, from where it is trivial to conclude $\Q(\alpha)\cong\Q(\beta)$ (using that $m_\alpha(x)=m_\beta(x)$).
+
+	\subsection{Proving that two subfields of $\C$ are the same}
+	
+	We aim now to formalise \Cref{lemma:equalext}, assuming that $\sqrt{p-1}$ lies in $\Q$. We first need to do some algebra with $\alpha$ and $\beta$. In particular, we have to get the expressions in \cref{eq:beta_ito_alpha} and \cref{eq:alpha_ito_beta}. Although this may seem easy, in Lean we have to handle it carefully. In particular, one has to prove that $\alpha,\beta\neq 0$. To reach expressions of $\alpha$ in terms of $\beta$ and vice versa, many (easy) subgoals have to be proved (e.g., $\beta^2-p=-\sqrt{p}$). In the code I have only proved \cref{eq:alpha_ito_beta}, since the proof of \cref{eq:beta_ito_alpha} (which has been \emph{sorried}) follows the exact same pattern and is rather long (approximately $25$ lines).
+	
+	The next step is to prove that $\alpha\in\Q(\beta)$ and $\beta\in\Q(\alpha)$. These goals are easy to prove since we now have $\alpha$ expressed in terms of $\beta$ and vice versa. To solve the goal, the \lstinline|exact?| tactic proved to be very useful: it suggested theorems like \lstinline|IntermediateField.sub_mem|, which guarantees that if two elements belong to, say, $\Q(\beta)$, then their difference also belongs to $\Q(\beta)$. Analogous theorems were suggested for the sum and the inverse of elements. 
+	
+	Now, it suffices to show that $\Q(\alpha)\subseteq \Q(\beta)$ and $\Q(\beta)\subseteq \Q(\alpha)$, just like in the informal proof. Moreover, we can reduce ourselves to prove that $\{\alpha\}\subseteq \Q(\beta)$ (and $\{\beta\}\subseteq \Q(\alpha)$) using \lstinline|adjoin_le_iff| and \lstinline|singleton_subset_iff|, which turns the goal to just proving $\alpha\subseteq \Q(\beta)$ (and $\beta\subseteq \Q(\alpha)$), which we have already proved.
+	
+	\subsection{Proving a extension is Galois}\label{sec:Galois}
+	
+	We define the field extension $\Q(\alpha,\beta)/\Q$ just as in \cref{list:2} (using now \lstinline|{α p, β p} : Set ℝ|). We are interested in proving that this extension is Galois, following the spirit of \Cref{lemma:isGalois}. Following the definition, we first have to prove that $\Q(\alpha,\beta)/\Q$ is algebraic. Thanks to \lstinline|IntermediateField.isAlgebraic_adjoin|, it is enough to prove that $\alpha$ and $\beta$ are a root of some monic polynomial, i.e., we have to prove that $\alpha$ and $\beta$ are integral. But we have already proved this before (see \cref{list:3}).
+	
+	Next, we need to prove that $\Q(\alpha,\beta)$ is a splitting field of $m_\alpha(x)$. The theorem \lstinline|isSplittingField_iff| reduces the goal to proving that $m_\alpha(x)$ splits in $\Q(\alpha,\beta)$ and that adjoining the root set of $m_\alpha(x)$ to $\Q$ produces $\Q(\alpha,\beta)$. To prove that the polynomial splits, we first show that $\pm\alpha$ and $\pm\beta$ belong to $\Q(\alpha,\beta)$. Next, we should show that we can write $m_\alpha(x)$ like in \cref{eq:poli_split} by means of something like:\\
+	
+	\begin{lstlisting}[caption={Proving that $m_\alpha(x)$ splits in $\Q(\alpha,\beta)$.}, label={list:4}]
+		have hfactor : Polynomial.map (algebraMap ℚ ↥(Q_ab p)) (m_alpha p) = ∏ r ∈ roots, (X - C r) := by
+	\end{lstlisting}
+	
+	Although I tried proving this \lstinline|have| statement, Lean complained about a type mismatch. I believe that this comes from defining the set of roots of $m_\alpha(x)$ to have type \lstinline|Finset (ℝ)|, while $m_\alpha(x)$ is defined to live in $\Q[x]$. I tried solving this issue, but I ultimately \emph{sorried} the proof to be able to continue with the proof.
+	
+	The second part requires showing that adjoining the root set of $m_\alpha(x)$ to $\Q$ produces $\Q(\alpha,\beta)$. Equivalently, we can prove that the root set of $m_\alpha(x)$ is exactly $\{\pm\alpha,\pm\beta\}$. For this, we first prove that $\pm\alpha$ and $\pm\beta$ are four \emph{distinct} roots of $m_\alpha(x)$, so that $\{\pm\alpha,\pm\beta\}\subseteq \{\text{root set of $m_\alpha(x)$}\}$. However, once I proved this, I could not find an appropriate lemma in Mathlib \cite{Mathlib} that closed the goal, although I think it should exist. My reasoning is the following. Let $S$ be a subset of the root set of $m_\alpha(x)$, and denote it by $R_m$. If $\abs{S}=\abs{R_m}$, then $S=R_m$. In our case this holds, since $\abs{S}=4$ and $4=\abs{S}\leq\abs{R_m}\leq\deg(m_\alpha(x))=4$, so $\abs{R_m}=4$. Since I was not able to find a lemma in Mathlib stating this result, I \emph{sorried} the proof.
+	
+	Using the fact that $\Q(\alpha,\beta)$ is a splitting field of $m_\alpha(x)$ we can directly conclude that $\Q(\alpha,\beta)/\Q$ is a normal extension using the Mathlib theorem \lstinline|Normal.of_isSplittingField| (found using the LeanSearch engine \cite{LeanSearch}). Similarly, we conclude that the extension is Galois by using the previous lemma (i.e., that the extension is normal) and by showing that $\Q(\alpha,\beta)$ is a separable extension of $\Q$. This latter fact is easily proved because $\Q(\alpha,\beta)$ is integral.\\
+	
+	\begin{lstlisting}[caption={Proving that $\Q(\alpha,\beta)$ is a Galois extension of $\Q$.}, label={list:5}]
+		lemma Q_ab_Galois (p : ℕ) (hp : Nat.Prime p)
+		(hgen : Q_ab p = IntermediateField.adjoin ℚ ({α p, -α p, β p, -β p} : Set ℝ))
+		: IsGalois ℚ (Q_ab p) := by
+		-- We use that the extension is normal (thus algebraic) and separable (char ℚ = 0)
+		have h_norm : Normal ℚ (Q_ab p) := Q_ab_normal p hp hgen
+		-- ℚ(α, β) is separable
+		have h_sep : Algebra.IsSeparable ℚ (Q_ab p) := by
+		exact Algebra.IsSeparable.of_integral ℚ ↥(Q_ab p)
+		exact { to_isSeparable := h_sep, to_normal := h_norm }
+	\end{lstlisting}
+
+	Observe that in Lean normal extensions are always algebraic, so there is no need to prove this separately (we have, however, maintained the proof that $\Q(\alpha,\beta)/\Q$ is algebraic in the code for completeness). 
+	
+	\subsection{Structure of a Galois group}
+	
+	Finally, we aim to formalise \Cref{lemma:Galstruct}. In this part of the code we always suppose that $\sqrt{p-1}$ is a rational number and we start by showing that $\Q(\alpha,\beta)=\Q(\alpha)$. In the proof of this lemma I believe it is worthwhile mentioning that I have used a new type of parenthesis I had never used before. In particular, I had to prove that $\alpha\in\Q(\alpha)$:\\
+	
+	\begin{lstlisting}[caption={Proving that $\alpha\in\Q(\alpha)$.}, label={list:7}]
+		have hα : α p ∈ Q_a p := by
+			exact adjoin_simple_le_iff.mp fun ⦃x⦄ a => a
+	\end{lstlisting}
+	
+	The theorem \lstinline|adjoin_simple_le_iff.mp| expects a proof of the fact that $\Q(\alpha)\subseteq \Q(\alpha)$ to conclude that $\alpha\in \Q(\alpha)$. This is achieved through an anonymous lambda function, that states that $\forall x\in\R, x\in\Q(\alpha)\Rightarrow x\in\Q(\alpha)$, thus proving that $\Q(\alpha)\subseteq \Q(\alpha)$. The correct syntax for this anonymous function is shown in \cref{list:7}. Note that in this case the special curly braces (representing a so-called strict implicit binder) could be replaced by standard curly braces ``$\{\}$'' (implicit binder).
+	
+	We then prove that the degree $[\Q(\alpha,\beta):\Q]=[\Q(\alpha):\Q]$ is $4$ using \lstinline|Module.finrank| and \lstinline|IntermediateField.adjoin.finrank|, which were again discovered using LeanSearch. Next, since the extension is Galois, we deduce that the cardinality of the Galois group is also $4$. However, in order to speak about the group $\Gal(\Q(\alpha,\beta)/\Q)$ we need to define it. We do this by saying that the type of \lstinline|Gal_Q_ab| is the $\Q$-automorphisms of $\Q(\alpha,\beta)$:\\
+	
+	\begin{lstlisting}[caption={Defining the Galois group of $\Q(\alpha,\beta)$.}, label={list:6}]
+		noncomputable abbrev Gal_Q_ab (p : ℕ) : Type _ := Q_ab p ≃ₐ[ℚ] Q_ab p
+	\end{lstlisting}
+
+	
+	We then prove that there exists some element of $\Gal(\Q(\alpha,\beta)/\Q)$ that has order $4$. I have \emph{sorried} the proof due to time constraints, but it can be shown by taking the non-trivial morphism $\sigma$ that sends $\alpha$ to $\beta$ and explicitly checking that $\sigma^k(\alpha)\neq \alpha$ for any $1\leq k \leq 3$, but $\sigma^4(\alpha)=\alpha$.
+	
+	Finally, we prove that $\Gal(\Q(\alpha,\beta)/\Q)$ is isomorphic to $\Z/4\Z$. We construct the isomorphism using a \lstinline|noncomputable def|. It is worth mentioning that we use \lstinline|isCyclic_iff_exists_natCard_le_orderOf| to characterise a cyclic group by finding an element with order greater or equal to the cardinality of the group (in our case we use the morphism $\sigma$). We finally use \lstinline|zmodCyclicMulEquiv| to build the isomorphism between $\Z/4\Z$ and any cyclic group of cardinality $4$.
+	
+	Due to time constraints and the fact that we have already written about $650$ lines of Lean code, we will not prove \Cref{lemma:subfields}, although this could be done using the Galois correspondence (for instance, using the definition \lstinline|IsGalois.fixedField_fixingSubgroup|, that assigns fixed fields to subgroups of $\Gal(\Q(\alpha,\beta)/\Q)$). 
+	
+	Finally, we run the \lstinline|#lint| command to check for formatting, and it shows that all the linting tests have passed, and no errors occur.
+	
+	\section{Challenges faced}\label{sec:challenges}
+	
+	To begin with, I found it rather challenging to define the polynomial $m_\alpha(x)=x^4-2px^2+p(p-1)$. Thanks to the help of Thomas Browning, I came across the concept of \lstinline|noncomputable def|, which turned out to be the right choice in this case.
+	
+	After completing this project, I can reflect upon some aspects of working with Galois theory in Lean.
+	
+	\begin{enumerate}
+		
+		\item Often times I struggled to formalise steps which are outside the scope of Galois theory itself, and that took much more lines to prove than I anticipated. For example, I found it particularly tricky to prove that $\sqrt{p}\leq p$ for a prime $p$, or that $m_\alpha(x)$ is monic. In particular, this last example shows that Lean handles statements very carefully. While $m_\alpha(x)$ being monic is obvious just by looking at it, in Lean one has to make sure there are no cancellations occurring that cancel the leading coefficient, thus affecting whether $m_\alpha(x)$ is monic or not. 
+		
+		My hope when I chose the topic for my $2$nd project was that \lstinline|grind| would do most of the trivial computations, and so I could focus on important results. This has proved not to be the case (\lstinline|grind| has not been used once in the code\footnote{The \lstinline|aesop| tactic, however, has proved to be useful for some divisibility properties.}), and so my code has grown considerably in length. This has forced me to \emph{sorry} some proofs.
+		
+		\item I found it hard to formalise Eisenstein criterion, since it requires working with a prime ideal rather than with a prime, and I am much less used to prime ideals in Lean.
+		
+		\item On a positive note, I found particularly nice the way in which Kronecker's construction is handled in Lean, and, in general, the way to define isomorphisms between subfields that come from adjoining roots of an irreducible polynomial. Moreover, I enjoyed proving that $\Q(\alpha)=\Q(\beta)$ as subfields of $\C$, since the Lean proof follows closely the informal one (after some painful calculations involving $\alpha$ and $\beta$).
+		
+		\item I found it rather hard to prove that $\Q(\alpha,\beta)$ is a splitting field of $m_\alpha(x)$. In particular, proving that the root set of $m_\alpha(x)$ is $\{\pm\alpha, \pm\beta\}$ may be the only result in this report I do not believe I could prove in Lean. As I explained in the report, I believe there might be one theorem missing in the Mathlib library regarding root sets of polynomials (see \Cref{sec:Galois}).
+		
+		\item After proving that, indeed, $\Q(\alpha,\beta)$ is a splitting field of $m_\alpha(x)$, the rest of the results in the informal section are easily and cleanly proved.
+		
+		\end{enumerate}
+		
+		\subsection{Reflecting on the chosen topic}
+		
+		The decision to formalise this result in Lean is in fact motivated by the result I want to formalise in my $3$rd project. In the last piece of coursework I aim to \emph{use}\footnote{I say ``use'' because Thomas Browning told me that Chebotarev density theorem is still not formalised in Mathlib.} Chebotarev density theorem to prove a result in algebraic number theory. Chebotarev's theorem, however, relies on Galois theory tools, so I thought it could be a good idea in the $2$nd project to familiarise myself with Galois theory in Lean before moving into this more intricate result.
+		
+		Specifically, if we let $K/F$ be an extension of number fields, we let $G:=\Gal(K/F)$ and we denote by $\Cl(\cdot)$ the conjugacy class of an automorphism of $G$, then the Chebotarev density theorem reads:
+		
+		\begin{theorem}[\textbf{Chebotarev Density Theorem}]\label{th:Chebo}
+			Let $C\subset G$ be a fixed conjugacy class. Then, the set 
+			\begin{equation*}
+				S:=\{\mathfrak{p}: \mathfrak{p} \ \text{a prime ideal of} \ F, \mathfrak{p} \ \text{unramified in} K, \ \Cl(\Frob_\mathfrak{p})=C\}
+			\end{equation*}
+			has Dirichlet density $d(S)=\# C/\# G>0$, so there exist infinitely many such prime ideals.
+		\end{theorem}
+		
+		My choice to use \Cref{th:Chebo} is motivated by the topic of my BSc Thesis in Mathematics. There, I proved that one can find ``Euclidean'' proofs\footnote{Loosely speaking, a ``Euclidean'' proof is one that resembles Euclid's proof of the infinitude of primes. It turns out that this similarity is expressed in terms of a suitable polynomial $f$ such that all the prime divisors of $f$ are $\equiv1,\ell\pmod{k}$ (expect maybe finitely many exceptions). To prove this, Chebotarev theorem is needed.} of the fact that there are infinitely many primes in the arithmetic progession $kn+\ell$, $n\geqslant 0$ ($k$ and $\ell$ are integers), if and only if $\ell^2\equiv 1\pmod{k}$. To prove the converse implication of this result, \Cref{th:Chebo} is needed. Curious readers may want to have a look at \href{https://github.com/joarca01/final-math-bsc-thesis/blob/main/Thesis-document/Thesis.pdf}{my thesis} and/or play around with the \href{https://mat.uab.cat/~masdeu/teaching/misc/euclid.php}{webpage} I created to automatically implement the Euclidean proofs.
+		
+	\section{Conclusions}\label{sec:conclu}
+
+	In all, this has been an instructive introduction to Lean, where I have learnt to define concepts in Galois theory and apply them to a specific example within this area. I have successfully proved that the extension $\Q(\alpha,\beta)/\Q$ is Galois, with Galois group isomorphic to $\Z/4\Z$. As further work, we could use the fundamental theorem of Galois theory to show that the only non-trivial, proper subfield of $\Q(\alpha,\beta)$ is $\Q(\sqrt{p})$. 
+	
+	For the upcoming projects I am interested in exploring further the field of Galois theory and its connections to Algebraic Number theory. As I have discussed in the previous section, I aim to use Chebotarev density theorem to prove a result on the order of some residue classes of primes dividing some special polynomial. I also have an expectation to learn more tactics and discover the Mathlib library in greater depth.
+	
+	{\small
+		\bibliographystyle{plainurl}
+		\bibliography{references}
+	}
+		 
+\end{document}

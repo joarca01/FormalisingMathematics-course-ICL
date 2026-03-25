@@ -1,0 +1,560 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{top=2cm, bottom=2cm, left=2.3cm, right=1.9cm}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{aliascnt}
+\usepackage{multirow}
+\usepackage{gensymb}
+\usepackage{diagbox}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xfrac}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{physics}
+\usepackage[nameinlink]{cleveref}
+\usepackage{titlesec}
+\usepackage{authblk}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\onehalfspacing
+\linespread{1.0}
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{green}{rgb}{0.0, 1.0, 0.0}
+\definecolor{leanblue}{RGB}{0,0,160}
+\definecolor{leangreen}{RGB}{0,120,0}
+\definecolor{leanred}{RGB}{160,0,0}
+\definecolor{leancomment}{RGB}{120,120,120}
+\hypersetup{colorlinks, citecolor=green, linkcolor=blue, urlcolor=blue}
+\setlength{\parindent}{16pt}
+
+\lstdefinelanguage{Lean}{
+	keywords={
+		theorem, lemma, def, structure, inductive, class,
+		namespace, section, variable, variables,
+		open, import, universe, universes,
+		begin, end, match, with, if, then, else,
+		by, fun, assume, have, show, from,
+		forall, exists, let, in
+	},
+	sensitive=true,
+	comment=[l]{--},
+	morecomment=[s]{/-}{-/},
+	string=[b]",
+}
+
+\lstset{
+	language=Lean,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{leanblue}\bfseries,
+	commentstyle=\color{leancomment}\itshape,
+	stringstyle=\color{leanred},
+	numbers=left,
+	numberstyle=\tiny,
+	mathescape=true,
+	stepnumber=1,
+	frame=single,
+	breaklines=true,
+	tabsize=2,
+	showstringspaces=false,
+	captionpos=b
+}
+
+\newcommand{\mapsup}{\mathrel{\mkern2mu\raisebox{-.5ex}{\rotatebox{90}{$\mapsto$}}}}
+\lstset{
+	literate=
+	{ℤ}{{$\mathbb{Z}$}}1
+	{α}{{$\alpha$}}1
+	{β}{{$\beta$}}1
+	{ℚ}{{$\mathbb{Q}$}}1
+	{ℕ}{{$\mathbb{N}$}}1
+	{⦃}{{$\{|$}}1
+	{⦄}{{$|\}$}}1
+    {∀ᶠ}{{$\forall^f$}}1
+	{≃ₐ}{{$\simeq_a$}}1
+	{∀}{{$\forall$}}1
+	{∃}{{$\exists$}}1
+    {↓}{{$\downarrow$}}1
+	{→}{{$\to$}}1
+	{↥}{{$\mapsup$}}1
+	{∧}{{$\land$}}1
+	{∈}{{$\in$}}1
+	{∏}{{$\prod$}}1
+	{≤}{{$\leqslant$}}1
+	{≥}{{$\geqslant$}}1
+	{⟨}{{$\langle$}}1
+	{⟩}{{$\rangle$}}1
+	{⁻¹}{{$^{-1}$}}1
+	{⟨}{{$\langle$}}1
+	{⟩}{{$\rangle$}}1
+	{↔}{{$\Leftrightarrow$}}1
+	{∧}{{$\wedge$}}1
+	{ℝ}{{$\R$}}1
+	{⇒}{{$\Rightarrow$}}1
+	{δ}{{$\delta$}}1
+	{K₂}{{$K_2$}}1
+	{K₁}{{$K_1$}}1
+	{x₀}{{$x_0$}}1
+	{ε}{{$\varepsilon$}}1
+	{≠}{{$\neq$}}1
+    {∞}{{$\infty$}}1
+	{·}{{\textperiodcentered}}1
+}
+
+\crefname{lstlisting}{Listing}{Listings}
+\Crefname{lstlisting}{Listing}{Listings}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+
+\crefname{theorem}{theorem}{theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+
+\crefname{lemma}{lemma}{lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+
+\crefname{definition}{definition}{definitions}
+\Crefname{definition}{Definition}{Definitions}
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+		\left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+		#1 % the function
+		\littletaller % pretend it's a little taller at normal size
+		\right|_{#2} % this is the delimiter
+}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}} % set of natural numbers
+\newcommand{\R}{\ensuremath{\mathbb{R}}} % set of real numbers
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}} % set of rational numbers
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}} % set of integer numbers
+\newcommand{\C}{\ensuremath{\mathbb{C}}} % set of complex numbers
+\DeclareMathOperator{\Irr}{Irr} % Irreducible polynomial
+\DeclareMathOperator{\Gal}{Gal} % Galois group
+\DeclareMathOperator{\Char}{char} % Characteristic
+\DeclareMathOperator{\Cl}{Cl} % Conjugacy class
+\DeclareMathOperator{\im}{Im} % Conjugacy class
+\DeclareMathOperator{\Frob}{Frob} % Frobenius automorphism
+\DeclareMathOperator{\Norm}{N} % Ideal norm
+\newcommand{\littletaller}{\mathchoice{\vphantom{\big|}}{}{}{}}
+
+% --------------------
+% Title formatting
+% --------------------
+\titleformat{\section}
+{\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+
+\begin{document}
+	\sffamily
+	%\title{\textbf{Formalising Mathematics} \\ \textbf{Project 1} \\ \textbf{Finite Jensen inequality for convex functions on $\R$}}
+	%\author{Joan Arenillas i Cases, \ 06067859}
+	%\maketitle
+	
+	% --------------------
+	% Title
+	% --------------------
+	\begin{center}
+		{\LARGE\bfseries
+			Formalising Mathematics Project 3: \\[0.3em]
+			Natural and Dirichlet Densities \\[0.3em]
+			\par}
+        \vspace{0.45cm}
+        {\large \today\par}
+	\end{center}
+    
+	\vspace{0.2cm}
+	
+	% --------------------
+	% Author
+	% --------------------
+	\begin{center}
+		\textbf{Joan Arenillas i Cases}\textsuperscript{1}
+	\end{center}
+	
+	\vspace{0.5cm}
+	
+	\noindent
+	\textsuperscript{1}MSc in Applied Mathematics, Imperial College London.\\
+	CID: 06067859, \ \href{mailto:ja1225@ic.ac.uk}{ja1225@ic.ac.uk}
+	
+	\vspace{0.6cm}
+	
+	% --------------------
+	% Keywords
+	% --------------------
+	\vspace{0.5cm}
+	
+	% --------------------
+	% Abstract
+	% --------------------
+	\noindent
+	\textbf{Abstract}\\
+    
+    In this report, we define in Lean the natural and Dirichlet densities of sets of prime numbers. Let $\Pi$ be the set of all primes, and let $S\subseteq\Pi$. By defining a suitable ratio between the elements of $S$ and those of $\Pi$, we define the natural density of $S$, denoted by $\delta(S)$. We then prove some basic facts about the natural density. Specifically, we show that $\delta(\Pi)=1$ and that $\delta(S)=0$ when $S$ is finite. 
+    
+    We then define the Dirichlet density of $S$, denoted by $d(S)$. Its definition is given in terms of infinite sums of powers of primes in $S$ and $\Pi$. By defining, once again, a suitable ratio, we prove in detail that these sums converge and hence give rise to a density. We then show that the Dirichlet density always lies in $[0,1]$.
+    
+    In the second part of the report, we formalise our results in Lean, together with other auxiliary but necessary lemmas. It is important to note that neither the natural density nor the Dirichlet density had been formalised before, so this work is a new contribution to the Lean project and community. At the end of the report, we discuss the challenges encountered and reflect on possible generalisations.
+	
+	\vspace{0.5cm}
+	
+	\section{Introduction}
+	
+	The goal of this report is to formalise in Lean the definitions of natural and Dirichlet densities and to prove some of their basic properties. Specifically, after defining the natural density, we will prove the following result. Let $\Pi$ be the set of all primes and let $S\subseteq\Pi$.
+	\begin{lemma}
+        The natural density of $\Pi$ is one, and the natural density of $S$ is zero when $S$ is finite.
+	\end{lemma}
+
+    Regarding the Dirichlet density, we will prove the following result.
+    \begin{lemma}
+        For any subset $S\subseteq \Pi$, its Dirichlet density lies in $[0,1]$.
+	\end{lemma}
+	
+	We will see in \Cref{sec:informal} that these results can be proved using only a small number of lemmas. We will need only elementary facts about limits of sequences and the convergence of infinite series. However, we will discover in \Cref{sec:formal} that the Lean implementation is far more intricate. In particular, it requires handling the convergence of infinite series carefully and using \emph{Filters} precisely to formalise limits in Lean. We will discuss the challenges we faced in \Cref{sec:challenges} and propose some ways to move forward and generalise our results in \Cref{sec:conclu}.
+	
+	There are many sources introducing the natural and Dirichlet densities of sets of primes. Unless otherwise stated, this report follows the definitions used in my BSc thesis \cite{JAC_thesis}.
+
+	\section{Informal Proof}\label{sec:informal}
+
+    We aim to construct a density for a given set of primes. One way to do this is via the natural density, and a different approach is via the Dirichlet density. We begin with the natural density.
+
+    \subsection{Natural density}
+    
+    Let $\Pi$ be the set of all prime numbers. Let $S\subseteq\Pi$ be a subset and let $p$ be a prime. For any natural number $n>1$, we define the \emph{upper natural density} and the \emph{lower natural density} of $S$ in $\Pi$ as
+    	\begin{equation}
+        \label{eq:up_low_nat_dens}
+    		\limsup_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}, \quad \liminf_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}},
+    	\end{equation}
+    	respectively. If both these densities coincide, we call the common value the \emph{natural density} (or \emph{asymptotic density}) of $S$ in $\Pi$, and we write it as
+    	\begin{equation}
+        \label{eq:natdens}
+    		\delta(S):=\lim_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}.
+    	\end{equation}
+    Many properties we would expect are indeed true: if $S$ does have a density, then $0\leq \delta(S)\leq 1$ and $\delta(\Pi)=1$. Also, since $\Pi$ is infinite, any finite set of primes has density equal to $0$. We will now prove these statements in detail to ease their Lean formalisation in \Cref{sec:formal}.
+
+    \begin{lemma}
+    \label{lemma:Nat1}
+        For every natural number $n>1$, the following bounds are satisfied:
+        \begin{equation}
+        \label{eq:NatRatio}
+            0\leq\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}\leq 1.
+        \end{equation}  
+    \end{lemma}
+    \begin{proof}
+        Start by noting that, for fixed $n>1$, both the sets $\{p\in S: p \leq n\}$ and $\{p\in \Pi: p \leq n\}$ are finite. The fact that
+         \begin{equation*}
+            0\leq\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}
+        \end{equation*} 
+        arises from the fact that $\#\{p\in S: p \leq n\}\geq 0$, since the cardinality of a finite set is non-negative, and $\#\{p\in \Pi: p \leq n\}>0$ since $n>1$. This last observation also tells us that the ratio is well-defined.
+
+        The other bound is easily settled by recalling that $S\subseteq\Pi$, so $\{p\in S: p \leq n\}\subseteq\{p\in \Pi: p \leq n\}$, and so the cardinality of the former finite set must be less than or equal to that of the latter finite set.
+    \end{proof}
+
+    From now on, we suppose $S$ has a natural density (hence the limit superior and inferior coincide). We are now interested in proving that the bounds of \Cref{lemma:Nat1} hold when taking the limit $n\rightarrow\infty$.
+
+    \begin{lemma}
+    \label{lemma:Nat2}
+        Suppose that the lower and upper natural densities of $S$ coincide. Then $0\leq \delta(S)\leq 1$.
+    \end{lemma}
+    \begin{proof}
+        For every $n>1$, the quantity \eqref{eq:NatRatio} is well-defined and lies in $[0,1]$ thanks to \Cref{lemma:Nat1}. Thus, taking the limit, we get 
+        \begin{equation*}
+            0\leq \lim_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}\leq 1,
+        \end{equation*}
+        from which the result follows.
+    \end{proof}
+
+    We can also prove that the set of prime numbers $\Pi$ has natural density equal to $1$.
+
+    \begin{lemma}
+    \label{lemma:Nat3}
+        The set of prime numbers has natural density equal to $1$, i.e., $\delta(\Pi)=1$.
+    \end{lemma}
+    \begin{proof}
+        Choosing $S=\Pi$, in the definition of upper natural density we have 
+        \begin{equation*}
+    		\limsup_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}=\limsup_{n\rightarrow\infty}\frac{\#\{p\in \Pi: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}=\limsup_{n\rightarrow\infty} 1=1, 
+        \end{equation*}
+        since $\#\{p\in \Pi: p \leq n\}>0$. Similarly, for the lower analogue,
+        \begin{equation*}
+    		\liminf_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}=\liminf_{n\rightarrow\infty}\frac{\#\{p\in \Pi: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}=\liminf_{n\rightarrow\infty} 1=1. 
+        \end{equation*} 
+        Since the two limits coincide and are equal to $1$, we have $\delta(\Pi)=1$.
+    \end{proof}
+
+    Finally, we will prove that if $S\subseteq\Pi$ is finite, then $\delta(S)=0$.
+    \begin{lemma}
+    \label{lemma:Nat4}
+        Let $S\subseteq\Pi$ be a finite set and suppose its lower and upper natural densities coincide. Then $\delta(S)=0$.
+    \end{lemma}
+    \begin{proof}
+       Observe that $\{p\in S: p \leq n\}\subseteq S$, so $\#\{p\in S: p \leq n\}\leq \#S<\infty$ for every $n>1$. Since there are infinitely many primes, $\#\{p\in \Pi: p \leq n\}\to\infty$ as $n\rightarrow\infty$. Since the lower and upper natural densities coincide, the following limit exists:
+        \begin{equation*}
+            \delta(S)=\lim_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}.
+        \end{equation*}
+        Therefore,
+        \begin{equation*}
+            0\leq\lim_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}\leq\lim_{n\rightarrow\infty}\frac{\#S}{\#\{p\in \Pi: p \leq n\}}=0,
+        \end{equation*}
+        where in first inequality we have used \Cref{lemma:Nat2}. Hence $\delta(S)=0$.
+    \end{proof}
+    
+    A less restrictive (yet less intuitive) notion of density is obtained via Dirichlet series. This yields the so-called \emph{Dirichlet density} of $S$.
+
+    \subsection{Dirichlet density}
+    
+    Again let $S\subseteq\Pi$ be a subset and let $p$ be a prime. Also suppose that $s\in\R$ with $s>1$. We define the \emph{upper Dirichlet density} and the \emph{lower Dirichlet density} of $S$ in $\Pi$ as
+	\begin{equation*}
+		\limsup_{s\rightarrow 1^+}\frac{\sum_{p\in S}p^{-s}}{\sum_{p\in \Pi}p^{-s}}, \quad \liminf_{s\rightarrow 1^+}\frac{\sum_{p\in S}p^{-s}}{\sum_{p\in \Pi}p^{-s}},
+	\end{equation*}
+	respectively. If both these densities coincide, we call the common value the \emph{Dirichlet density} (or \emph{analytic density}) of $S$ in $\Pi$, and we write it as
+	\begin{equation}\label{eq:Dirichletdensity}
+		d(S):=\lim_{s\rightarrow1^+}\frac{\sum_{p\in S}p^{-s}}{\sum_{p\in \Pi}p^{-s}}.
+	\end{equation}        
+    These expressions for the upper and lower Dirichlet densities have to be handled with care. Specifically, it is essential to prove that both the numerator and the denominator in \eqref{eq:Dirichletdensity} converge. Choosing $s>1$, together with the fact that $\sum_{p\in\Pi}p^{-1}$ diverges, points us in that direction.
+
+    We will start by proving that the infinite series $\sum_{p\in\Pi}p^{-s}$ converges.
+    \begin{lemma}
+    \label{lemma:Dir1}
+       The infinite series $\sum_{p\in\Pi}p^{-s}$ converges.
+    \end{lemma}
+    \begin{proof}
+       It is a standard fact in analysis that the series $\sum_{n=1}^\infty n^{-\alpha}$ converges if and only if $\alpha>1$. Since $s>1$, we may take $\alpha=s$ and write
+       \begin{equation*}
+           \sum_{p\in\Pi}p^{-s}\leq \sum_{n=2}^\infty n^{-s}<\infty,
+       \end{equation*}
+       where the first inequality follows from the fact that $\Pi\subseteq\N$ and that $n^{-s}>0$ for every $n\geq 2$.
+    \end{proof}
+
+    In a similar fashion, one can prove that the infinite series $\sum_{p\in S}p^{-s}$ converges.
+    \begin{lemma}
+    \label{lemma:Dir2}
+       The infinite series $\sum_{p\in S}p^{-s}$ converges.
+    \end{lemma}
+    \begin{proof}
+       Recall that $S\subseteq\Pi\subseteq\N$ and that $p^{-s}>0$ for every $p\in\N$. Then, by \Cref{lemma:Dir1},
+       \begin{equation*}
+           \sum_{p\in S}p^{-s}\leq\sum_{p\in\Pi}p^{-s}<\infty.
+       \end{equation*}
+    \end{proof}
+
+    Like we did with the natural density, we can prove that the Dirichlet density is bounded.
+    \begin{lemma}
+    \label{lemma:Dir3}
+        For every $s>1$, the following bounds are satisfied:
+        \begin{equation}
+        \label{eq:Dir_bound}
+           0\leq\frac{\sum_{p\in S}p^{-s}}{\sum_{p\in \Pi}p^{-s}}\leq 1.
+        \end{equation}  
+    \end{lemma}
+    \begin{proof}
+        Start by recalling that, for a fixed $s>1$, both the numerator and the denominator of \eqref{eq:Dir_bound} converge due to \Cref{lemma:Dir2} and \Cref{lemma:Dir1}, respectively. Also, each term in the infinite sums is positive. The fact that
+         \begin{equation*}
+            0\leq\frac{\sum_{p\in S}p^{-s}}{\sum_{p\in \Pi}p^{-s}}
+        \end{equation*} 
+        arises from $\sum_{p\in S}p^{-s}\geq 0$ (since all the terms in the sum are non-negative) and from the fact that $\sum_{p\in \Pi}p^{-s}>0$ (since this sum contains at least the term $2^{-s}$, which is strictly positive). This last observation also tells us that the ratio is well-defined.
+
+        The other bound is easily settled by recalling that $S\subseteq\Pi$, so $\sum_{p\in S}p^{-s}$ must be less than or equal to $\sum_{p\in \Pi}p^{-s}$.
+    \end{proof}
+
+    We are now interested in proving that the bounds of \Cref{lemma:Dir3} hold when taking the limit $s\rightarrow 1^+$.
+
+    \begin{lemma}
+    \label{lemma:Dir4}
+        Suppose that the lower and upper Dirichlet densities of $S$ coincide. Then $0\leq d(S)\leq 1$.
+    \end{lemma}
+    \begin{proof}
+        For every $s>1$, the quantity \eqref{eq:Dir_bound} is well-defined and lies in $[0,1]$ thanks to \Cref{lemma:Dir3}. Thus, taking the limit, we get 
+        \begin{equation*}
+            0\leq \lim_{s\rightarrow1^+}\frac{\sum_{p\in S}p^{-s}}{\sum_{p\in \Pi}p^{-s}}\leq 1,
+        \end{equation*}
+        from which the result follows.
+    \end{proof}
+	\section{Formal Proof}\label{sec:formal}
+
+	We now turn our attention to formalising \Cref{sec:informal} in Lean\footnote{I acknowledge that I have used Microsoft Copilot to check the spelling of this report. Also, the \lstinline|exact?| and \lstinline|apply?| tactics have been used to propose next steps in proofs. I have commented on the code where I used these strategies.}. In the code, we follow the structure of the previous section. That is, we divide it into subsections, providing the necessary results and definitions to prove the lemmas in the previous section.
+
+	We start by introducing the most important preliminary results needed to prove the first two lemmas in \Cref{sec:informal}, which revolve around the fact that the natural density is bounded.
+
+	\subsection{Boundedness of the natural density}
+
+	Our goal is to prove \Cref{lemma:Nat1} in Lean. The first thing to note is how we define the set of primes that are less than or equal to $n>1$. We can use the \lstinline|.filter P| command to obtain those elements that satisfy a given proposition \lstinline|P|.\\
+
+	\begin{lstlisting}[caption={Definition of $\{p\in \Pi: p \leq n\}$.}, label={list:1}]
+	def primesLe (n : ℕ) : Finset ℕ := (Finset.range (n + 1)).filter Nat.Prime
+	\end{lstlisting}
+    In a similar way, we define the primes in $S$ that are less than or equal to $n$. After this, we prove some small lemmas about the positivity of the cardinality of these sets and of the ratio they define. In particular, the fact that the ratio \eqref{eq:NatRatio} is non-negative is easily settled with \lstinline|positivity|. 
+
+    However, showing that it is smaller than or equal to $1$ requires some more work \mbox{(see \lstinline|densityRatio_leq_one|)}. The core idea lies in showing that $\{p\in S: p \leq n\}$ is a subset of $\{p\in \Pi: p \leq n\}$, so an inequality can be written in terms of their cardinalities. The key theorem that settles this implication is precisely \lstinline|Finset.card_le_card|, which was found using the LeanSearch tool \cite{LeanSearch}. Yet another interesting feature in this proof is the following line:\\
+
+    \begin{lstlisting}[caption={Application of a theorem to both sides of an equality.}, label={list:2}]
+		exact le_of_le_of_eq h_card_subset (congrArg Nat.cast h_card)
+	\end{lstlisting}
+    Observe the use of \lstinline|congrArg Nat.cast|, which cleanly applies the canonical homomorphism $\N\rightarrow\R$ to both sides of the equality given by \lstinline|h_card|.
+
+    After this, we define the upper and lower natural densities, and finally the natural density. Observe in \eqref{eq:up_low_nat_dens} that we need to take the limit superior and limit inferior, respectively. Since this is an example of using \emph{Filters} in Lean, it is worth looking at it in more detail. As an example, we define the upper natural density as follows:\\
+    \begin{lstlisting}[caption={Definition of the upper natural density.}, label={list:3}]
+	noncomputable def upperNaturalDensityInPrimes (S : Set ℕ) : ℝ :=
+    Filter.limsup (densityRatio S) Filter.atTop
+	\end{lstlisting}
+    The \lstinline|Filter.limsup| describes the limit superior in Filter language, and \lstinline|Filter.atTop| formalises the idea of $n\rightarrow\infty$. 
+
+    Once we have defined the natural density, we suppose that $S$ has a natural density (hence the limit superior and inferior coincide) and aim to prove \Cref{lemma:Nat2}. We begin by proving that $0\leq\delta(S)$. We use the following lemma:\\
+    \begin{lstlisting}[caption={Proof that $0\leq\delta(S)$.}, label={list:4}]
+	lemma natural_density_nonneg (S : Set ℕ)
+    (hd : lowerNaturalDensityInPrimes S = upperNaturalDensityInPrimes S) :
+    0 ≤ NaturalDensityInPrimes S := by
+      rw [NaturalDensityInPrimes, hd, upperNaturalDensityInPrimes]
+      simp only [↓reduceIte]
+      -- If every element of a set is nonnegative, then its infimum is nonnegative
+      refine Real.sInf_nonneg ?_
+      intro x hx
+      -- Write hx in a nicer way
+      change $\forall^f$ y in Filter.map (densityRatio S) Filter.atTop, y ≤ x at hx
+      change $\forall^f$ n in Filter.atTop, densityRatio S n ≤ x at hx
+      -- Unpack the eventually_atTop filter
+      rcases Filter.eventually_atTop.mp hx with ⟨m, hm⟩
+      exact le_trans (densityRatio_nonneg S m) (hm m le_rfl)
+	\end{lstlisting}
+    In this proof, we use \lstinline|refine Real.sInf_nonneg ?_|, which says that if every element of a set is nonnegative, then its infimum is nonnegative. Since in Lean the limit superior is defined using an infimum of eventual upper bounds, we have to prove that any eventual upper bound is nonnegative.
+
+    The following two lines change the type of the hypothesis about an eventual upper bound to a more convenient shape (this can be done since the types are definitionally equal). The next line, which uses the theorem \lstinline|Filter.eventually_atTop|, introduces the hypothesis that from $m$ onwards, all the values of \eqref{eq:natdens} are at most $x$. A chain of inequalities using \lstinline|le_trans| finishes the proof.
+
+    We now prove that $\delta(S)\leq 1$. The main technical step in this lemma (\mbox{called \lstinline|natural_density_leq_one|}) is the use of the theorem \lstinline|csInf_le|. Since our goal is to prove that the limit superior in \eqref{eq:up_low_nat_dens} is at most $1$, we can equivalently prove that the infimum of all eventual upper bounds is at most $1$. We then use \lstinline|csInf_le| to reduce our goal to proving that the set of eventual upper bounds is non-empty and that $1$ belongs to that set. Both of these subgoals are easier than the original one and can be proved in a few lines.
+
+    \subsection{Natural density of the set of primes}
+
+    Our goal is to prove \Cref{lemma:Nat3} in Lean. We first prove that for $S=\Pi$, the ratio \eqref{eq:NatRatio} is $1$ for all $n>1$. We then prove that the lower and upper natural densities are both $1$. We show the lower density case as an example:\\
+    \begin{lstlisting}[caption={(Part of the) proof that the lower natural density of $\Pi$ is $1$.}, label={list:5}]
+	have h_lower : lowerNaturalDensityInPrimes Primes = 1 := by
+    rw [lowerNaturalDensityInPrimes]
+    have h_eventually : $\forall^f$ n in atTop, densityRatio Primes n = 1 := by
+      filter_upwards [eventually_gt_atTop 1] with n hn
+      exact h_dens n hn
+    rw [liminf_congr h_eventually]
+    simp
+	\end{lstlisting}
+    Observe that \lstinline{$\forall^f$ n in atTop, densityRatio Primes n = 1} means: ``eventually, for all sufficiently large $n$, the natural density in \eqref{eq:NatRatio} is $1$ if $S=\Pi$''. Then, \lstinline|filter_upwards| and \lstinline|eventually_gt_atTop| build the eventual statement and provide a natural number $n$ for which the previous statement is true (together with a hypothesis over $n$). The main step in this proof is \lstinline|rw [liminf_congr h_eventually]|, which says that if two sequences are eventually equal (in this case, the natural density ratio and $1$), then they have the same limit inferior.
+
+    \subsection{Natural density of finite sets}
+
+    Our goal is to prove \Cref{lemma:Nat4} in Lean. The key part of the lemma \lstinline|natural_density_finite_eq_zero| is the following:\\
+    \begin{lstlisting}[caption={(Part of the) proof that a finite set has zero natural density.}, label={list:6}]
+	  have h_upper_zero :
+      Filter.limsup (fun n => ((primesInSLe S n).card : ℝ) / (Nat.primeCounting n))
+      Filter.atTop = 0 := by
+    refine' Filter.Tendsto.limsup_eq _
+    refine' squeeze_zero_norm' _ _
+    · use fun n => M / Nat.primeCounting n
+    · filter_upwards [h_lim_den.eventually_gt_atTop 0] with n hn
+      rw [Real.norm_of_nonneg (by positivity)]
+      gcongr
+      exact_mod_cast h_num_bdd n
+    · -- A constant divided by something going to ∞ is 0
+      exact tendsto_const_nhds.div_atTop (tendsto_natCast_atTop_atTop.comp h_lim_den)
+	\end{lstlisting}
+
+    In \Cref{list:6} we aim to prove that
+    \begin{equation*}
+        \limsup_{n\rightarrow\infty} f(n):=\limsup_{n\rightarrow\infty}\frac{\#\{p\in S: p \leq n\}}{\#\{p\in \Pi: p \leq n\}}=0.
+    \end{equation*}
+    To prove this, it is enough to find a function $g(n)$ such that, eventually, $\norm{f(n)}\leq g(n)$ and $g(n)\rightarrow 0$ as $n\rightarrow\infty$. These are exactly the goals that \lstinline|refine' squeeze_zero_norm'| produces. The function $g(n)$ is taken to be the finite cardinality of $S$ (denoted by $M$ in the code) over $\#\{p\in \Pi: p \leq n\}$. The fact that $g(n)\rightarrow 0$ as $n\rightarrow\infty$ can be easily proved using theorems that guarantee that a sequence that tends to a constant divided by a sequence that tends to infinity tends to zero. 
+
+    \subsection{Convergence results for the Dirichlet density}
+
+    Our goal is to prove \Cref{lemma:Dir1} in Lean. It is interesting to note that in Lean the convergence of the series $\sum_{p\in\Pi}p^{-s}$ is stated as follows:\\
+    \begin{lstlisting}[caption={Statement that $\sum_{p\in\Pi}p^{-s}$ converges.}, label={list:7}]
+    lemma h_den_summable [DecidablePred (· ∈ Primes)] (s : ℝ) (hs : 1 < s) :
+    Summable (fun p : ℕ => if p ∈ Primes then (p : ℝ) ^ (-s) else 0) := by [...]
+	\end{lstlisting}
+    Note that convergence is expressed with \lstinline|Summable|. A particularity of infinite sums in Lean is that we must include \lstinline|[DecidablePred (· ∈ Primes)]| so Lean can always decide whether $p$ is a prime or not. Furthermore, in the proof of this lemma we use the comparison test for convergence, which in Lean is \lstinline|Summable.of_nonneg_of_le|. This same result is used to prove that the series $\sum_{p\in S}p^{-s}$ converges (\Cref{lemma:Dir2}).
+
+    \subsection{Boundedness of the Dirichlet density}
+
+    Our goal is to prove \Cref{lemma:Dir3} in Lean. The most challenging step in this lemma is finding the right theorems to use in the Mathlib corpus. In particular, proving that $0<2^{-s}<\sum_{p\in \Pi}p^{-s}$ is achieved through \lstinline|Summable.sum_le_tsum|, which we found using LeanSearch.
+
+    The fact that the ratio defining the Dirichlet density (expression \eqref{eq:Dirichletdensity}) is smaller than or equal to $1$ can be settled easily. The key theorem to use is \lstinline|Summable.tsum_mono|, which compares two infinite summable series in terms of their defining formulas.
+
+    After this, we define the upper and lower Dirichlet densities, and finally the Dirichlet density. Again, note that we need to take the limit superior and limit inferior as $s\rightarrow 1^+$, respectively. As an example, we define the lower Dirichlet density as follows:\\
+    \begin{lstlisting}[caption={Definition of the lower Dirichlet density.}, label={list:8}]
+	noncomputable def lowerDirichletDensity (S : Set ℕ) [DecidablePred (· ∈ S)]
+    [DecidablePred (· ∈ Primes)] : ℝ :=
+  Filter.liminf (fun s => densityRatio_Dirichlet S s) (nhdsWithin 1 (Set.Ioi 1))
+	\end{lstlisting}
+    The main difference from the natural density definition is that, in this case, the limit is taken as $s\rightarrow 1^+$. This is achieved by writing \lstinline|nhdsWithin 1 (Set.Ioi 1)|, which describes approaching $1$ while being restricted to the set \lstinline|Set.Ioi 1| (the Lean way of the interval $(1,\infty)$).
+
+    Finally, \Cref{lemma:Dir4} is formalised in a similar way to its natural counterpart. There are a couple of details worth highlighting when proving that $d(S)\leq 1$:\\
+    \begin{lstlisting}[caption={(Part of) the proof that $d(S)\leq 1$.}, label={list:9}]
+    refine Filter.limsup_le_of_le ?_ ?_ -- this theorem gives us 2 subgoals
+      · exact Filter.isCoboundedUnder_le_of_eventually_le _ (by
+          filter_upwards [self_mem_nhdsWithin] with s hs
+          exact densityRatio_Dirichlet_nonneg S s hs)
+      · filter_upwards [self_mem_nhdsWithin] with s hs
+        exact densityRatio_Dirichlet_leq_one S hS s hs
+	\end{lstlisting}
+    The theorem \lstinline|Filter.limsup_le_of_le| reduces our goal to proving that (i) the ratio \eqref{eq:Dirichletdensity} is eventually bounded below; and (ii) for all $s$ sufficiently close to $1$ from the right, the ratio \eqref{eq:Dirichletdensity} is at most $1$. This concludes the formalisation of our results.
+
+	Finally, we run the \lstinline|#lint| command to check the formatting, and it shows that all the linting tests have passed and no errors occur.
+
+	\section{Challenges faced and next steps}\label{sec:challenges}
+
+	To begin with, this project has made me think about infinite series differently. In particular, I reflected on the importance of infinite series converging in order to define quantities from them, such as the Dirichlet series. In this respect, I have learnt how to deal with infinite series in Lean through decidable predicates that allow Lean to decide whether an element $p$ belongs to a set or not.
+
+	After completing this project, I can reflect upon the following aspects.
+
+	\begin{enumerate}
+
+		\item Oftentimes I struggled to formalise steps that are elementary in real analysis. For example, it is straightforward to see that $\sum_{p\in \Pi}p^{-s}>0$: the set $\Pi$ is non-empty and all the terms are positive. However, in Lean the usual tactics \lstinline|try?|, \lstinline|apply?|, or \lstinline|grind| do not work, even when the hypothesis $p^{-s}>0$ has been proved and can be used. 
+
+		\item I found it rather hard to prove that the number \lstinline|n.primeCounting|, which returns the number of primes less than or equal to $n$, is strictly positive if $n>1$. In particular, I instead proved that the set of primes less than or equal to $n>1$ has positive cardinality and proved separately that the cardinality of this set equals \lstinline|n.primeCounting|. To my mind, this is an unnecessary detour for a well-known fact.
+
+        \item On a positive note, I found particularly nice the way in which Lean unifies the concept of limit using Filters. It is very pleasant to see that close (but slightly different) concepts such as $\liminf$, $\limsup$, $\lim$, etc. are all treated within a unified framework.
+
+        Although it may be a little hard to work with at first, the advantages of Filters outweigh the learning effort.
+
+		\end{enumerate}
+
+	\subsection{Reflecting on the chosen topic and ways to move forward}
+
+    I initially intended to prove the Chebotarev Density Theorem, in which the concept of Dirichlet density plays a central role. After speaking to Bhavik Mehta, we agreed that a more realistic goal would be to define and prove some basic results about natural and Dirichlet densities, which, interestingly enough, have not yet been incorporated into Mathlib \cite{Mathlib}.
+
+    The work in this project could be extended in many ways. For instance, one could prove that the Dirichlet density of $S$ can also be written as
+    \begin{equation}\label{eq:Dirichletdensfinal}
+    	d(S)=\lim_{s\rightarrow1^+}\frac{\sum_{p\in S}p^{-s}}{-\log(s-1)}
+    \end{equation}
+    if the limit exists.
+
+    Furthermore, the Dirichlet density is a generalisation of the natural density: if the natural density exists, then the Dirichlet density also exists, and the two coincide. However, the converse is not always true. An example due to Enrico Bombieri, referenced in \cite{Serre}, shows this phenomenon. If $P^1$ denotes the set of primes whose first digit is $1$, then $P^1$ does not have a natural density, whereas its Dirichlet density exists and equals $d(P^1)=\log_{10}2\approx0.30103$.
+
+     Further work could also include extending \eqref{eq:Dirichletdensfinal} to sets of prime \emph{ideals}. This concept is widely used in analytic and algebraic number theory and would certainly be worth including in Mathlib. It is defined as follows. Let $\mathfrak{p}$ be a prime ideal lying above a prime number $p$, with ideal norm $\Norm(\mathfrak{p})=p^f$ for some inertia degree $f$. Then a set $S$ of prime ideals in a number field $K$ has \emph{Dirichlet density} $d(S)$ if the limit
+	\begin{equation}\label{eq:Dirichletdensity1}
+		d(S)=\lim_{s\rightarrow1^+}\frac{\sum_{\mathfrak{p}\in S}\Norm(\mathfrak{p})^{-s}}{-\log(s-1)}
+	\end{equation}
+	exists. If it does not exist, one may instead define the \emph{lower Dirichlet density} (resp. \emph{upper Dirichlet density}) using the limit inferior (resp. limit superior). Observe that the formula in \eqref{eq:Dirichletdensity1} closely parallels the one in \eqref{eq:Dirichletdensfinal} for prime numbers. Moreover, one may go on to show that Dirichlet density is a finitely additive measure and deduce from \eqref{eq:Dirichletdensity1} that $0\leq d\leq 1$.
+
+\section{Conclusions}\label{sec:conclu}
+
+	In all, this project has been an instructive introduction to Lean, through which I have learnt how to work with limits and infinite sums. I have successfully defined both the natural and the Dirichlet densities for sets of primes and proved that they lie in the interval $[0,1]$. I have also proved that the natural density of the set of primes is one and that any finite subset of them has natural density zero.
+    
+    It has also been rewarding to formalise results in Lean that, as of today, have not yet been formalised in Mathlib. As further work, one could define and prove basic properties of the Dirichlet density for sets of prime ideals, or formalise the fact that the Dirichlet density is a generalisation of the natural density. One could even aim to include all these results in the current Mathlib corpus.
+	
+    \bibliographystyle{plainurl}
+    \bibliography{references}
+		 
+\end{document}
